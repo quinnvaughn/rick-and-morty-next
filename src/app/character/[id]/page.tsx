@@ -2,6 +2,8 @@ import { Character, Episode, getCharacterById } from '@/lib/api'
 import Image from 'next/image'
 import Link from 'next/link'
 import { css, cva } from '../../../../styled-system/css'
+import Card from '@/components/card'
+import Main from '@/components/main'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -29,39 +31,19 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
-const sectionStyle = css.raw({
+const sectionStyle = css({
   backgroundColor: '#fafafa',
   border: '1px solid #ddd',
   borderRadius: '0.75rem',
   padding: '1.25rem',
   display: 'flex',
-  flexDirection: 'column',
-  gap: '0.5rem',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: '1.5rem',
 })
 
 const h2Style = css({
   fontSize: '1.25rem',
-})
-
-const mainStyle = cva({
-  base: {
-    padding: '2rem',
-    width: '100%',
-    display: 'flex',
-    gap: '2rem',
-  },
-  variants: {
-    direction: {
-      column: {
-        flexDirection: 'column',
-        maxWidth: '800px',
-      },
-      row: {
-        flexDirection: 'row',
-        maxWidth: '100%',
-      },
-    },
-  },
 })
 
 export default async function Page({ params }: Props) {
@@ -76,7 +58,7 @@ export default async function Page({ params }: Props) {
 
   if (isHighVolume) {
     return (
-      <main className={mainStyle({ direction: 'row' })}>
+      <Main direction="row">
         <div
           className={css({
             flex: 1,
@@ -99,31 +81,25 @@ export default async function Page({ params }: Props) {
           <CharacterInfo character={character} />
           <CharacterLocationInfo character={character} />
         </div>
-      </main>
+      </Main>
     )
   } else {
     return (
-      <main className={mainStyle({ direction: 'column' })}>
+      <Main>
         <CharacterHeader character={character} />
         <CharacterInfo character={character} />
         <CharacterLocationInfo character={character} />
-        <CharacterSection title="📺 Episodes">
+        <Card title="📺 Episodes">
           <EpisodeList episodes={character.episode} />
-        </CharacterSection>
-      </main>
+        </Card>
+      </Main>
     )
   }
 }
 
 function CharacterHeader({ character }: { character: Character }) {
   return (
-    <section
-      className={css(sectionStyle, {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: '1.5rem',
-      })}
-    >
+    <section className={sectionStyle}>
       <Image
         src={character.image || '/placeholder.png'}
         alt={character.name}
@@ -145,7 +121,7 @@ function CharacterHeader({ character }: { character: Character }) {
 
 function CharacterInfo({ character }: { character: Character }) {
   return (
-    <CharacterSection title="⚙️ Character Info">
+    <Card title="⚙️ Character Info">
       <p>
         <strong>ID: </strong>
         {character.id}
@@ -158,13 +134,13 @@ function CharacterInfo({ character }: { character: Character }) {
         <strong>Type: </strong>
         {character.type || 'N/A'}
       </p>
-    </CharacterSection>
+    </Card>
   )
 }
 
 function CharacterLocationInfo({ character }: { character: Character }) {
   return (
-    <CharacterSection title="📍 Location Info">
+    <Card title="📍 Location Info">
       <div>
         <p className={css({ fontWeight: 600, paddingBottom: '0.25rem' })}>
           🧬 Origin:
@@ -195,13 +171,13 @@ function CharacterLocationInfo({ character }: { character: Character }) {
           {character.location.dimension || 'Unknown'}
         </p>
       </div>
-    </CharacterSection>
+    </Card>
   )
 }
 
 function EpisodeList({ episodes }: { episodes: Episode[] }) {
   return (
-    <ul className={css({ paddingLeft: '1.25rem' })}>
+    <ul className={css({ paddingLeft: '1.5rem' })}>
       {episodes.map((ep) => (
         <li key={ep.id}>
           <Link
@@ -218,25 +194,5 @@ function EpisodeList({ episodes }: { episodes: Episode[] }) {
         </li>
       ))}
     </ul>
-  )
-}
-
-function CharacterSection({
-  children,
-  title,
-}: {
-  children: React.ReactNode
-  title: string
-}) {
-  return (
-    <section
-      className={css(sectionStyle, {
-        flexDirection: 'column',
-        gap: '0.5rem',
-      })}
-    >
-      <h2 className={h2Style}>{title}</h2>
-      {children}
-    </section>
   )
 }

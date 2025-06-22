@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { SearchProvider } from '@/context/search'
 
 export const metadata: Metadata = {
   title: 'Rick and Morty',
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SearchProvider>{children}</SearchProvider>
+      </body>
     </html>
   )
 }
