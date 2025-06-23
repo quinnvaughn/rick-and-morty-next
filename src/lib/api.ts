@@ -72,7 +72,7 @@ export async function getCharacters(page: number = 1, name?: string) {
       }
     }
     return data.characters.results
-  } catch (error) {
+  } catch {
     throw new Error('Failed to fetch characters')
   }
 }
@@ -123,7 +123,7 @@ export async function getCharacterById(id: number) {
       character: Character
     }
     return data.character
-  } catch (error) {
+  } catch {
     throw new Error(`Failed to fetch character with id ${id}`)
   }
 }
@@ -153,7 +153,7 @@ export async function getEpisodeById(id: number) {
       episode: Episode
     }
     return data.episode
-  } catch (error) {
+  } catch {
     throw new Error(`Failed to fetch episode with id ${id}`)
   }
 }

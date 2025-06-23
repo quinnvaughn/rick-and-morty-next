@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props) {
       title: `${character.name}'s Details - Rick and Morty`,
       description: `Details about ${character.name}, a character from Rick and Morty.`,
     }
-  } catch (error) {
+  } catch {
     return {
       title: 'Character Not Found',
       description: 'The character you are looking for does not exist.',

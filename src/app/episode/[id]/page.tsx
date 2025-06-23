@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
       title: `${episode.name}'s Details - Rick and Morty`,
       description: `Details about ${episode.name}, an episode from Rick and Morty.`,
     }
-  } catch (error) {
+  } catch {
     return {
       title: 'Episode Not Found',
       description: 'The episode you are looking for does not exist.',
