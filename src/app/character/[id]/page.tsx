@@ -1,9 +1,10 @@
 import { Character, Episode, getCharacterById } from '@/lib/api'
 import Image from 'next/image'
 import Link from 'next/link'
-import { css, cva } from '../../../../styled-system/css'
+import { css } from '../../../../styled-system/css'
 import Card from '@/components/card'
 import Main from '@/components/main'
+import FavoriteCharacter from '@/components/favorite-character'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -114,6 +115,7 @@ function CharacterHeader({ character }: { character: Character }) {
         <p className={css({ fontStyle: 'italic', color: '#666' })}>
           {character.status} {character.species} {character.gender || 'Unknown'}
         </p>
+        <FavoriteCharacter id={character.id} />
       </div>
     </section>
   )
