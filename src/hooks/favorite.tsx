@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 
+// as we don't control this API, we can use localStorage to manage favorites
 export function useFavoriteCharacter(id: number) {
   const [isFavorite, setIsFavorite] = useState(false)
 
